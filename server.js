@@ -62,5 +62,3 @@ let tcpAddress = args.address || defaultAddr;
 let tcpPort = args.port || defaultPort;
 
 server.start(args.address, args.port);
-
-process.exit(exitCodeSuccess);

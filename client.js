@@ -60,5 +60,3 @@ let tcpAddress = args.address || defaultAddr;
 let tcpPort = args.port || defaultPort;
 
 client.connect(args.address, args.port);
-
-process.exit(exitCodeSuccess);
