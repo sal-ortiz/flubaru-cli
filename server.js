@@ -15,7 +15,7 @@ const exitCodeFailure = 255;
 const argsCfg = [
   { name: 'address',  alias: 'b', type: String, defaultOption: defaultAddr },
   { name: 'port',     alias: 'p', type: String, defaultOption: defaultPort },
-  { name: 'help',     alias: 'h', type: String, defaultOption: defaultPort },
+  { name: 'help',     alias: 'h', type: String },
 ]
 
 const args = Args(argsCfg);
@@ -61,6 +61,6 @@ process.on('SIGUSR2', process.exit.bind(process));  // exit
 let tcpAddress = args.address || defaultAddr;
 let tcpPort = args.port || defaultPort;
 
-server.start(tcpAddress, tcpPort);
+server.start(args.address, args.port);
 
 process.exit(exitCodeSuccess);
