@@ -2,19 +2,20 @@
 
 const Args = require('command-line-args');
 const PortAudio = require('naudiodon');
-const TCP = require('tcp-audio-stream').Server;
+const UDP = require('udp-audio-stream');
 
 
-const defaultAddr = '0.0.0.0';
-const defaultPort = '3000';
+//const defaultAddr = '0.0.0.0';
+const defaultAddr = '224.0.0.120';
+const defaultPort = 3000;
 
 const exitCodeSuccess = 0;
 const exitCodeFailure = 255;
 
 
 const argsCfg = [
+  { name: 'port',     alias: 'p', type: Number, defaultOption: defaultPort },
   { name: 'address',  alias: 'b', type: String, defaultOption: defaultAddr },
-  { name: 'port',     alias: 'p', type: String, defaultOption: defaultPort },
   { name: 'help',     alias: 'h', type: String },
 ]
 
@@ -23,10 +24,10 @@ const args = Args(argsCfg);
 
 if (args.help) {
   let str = [
-    'usage: ./server.js [BIND_ADDRESS] [BIND_PORT]',
-    '   [BIND_ADDRSS] defaults to address ' + defaultAddr,
+    'usage: ./server.js [BIND_PORT] [BIND_ADDRESS]',
     '   [BIND_PORT defaults to port ' + defaultPort,
-   '',
+    '   [BIND_ADDRSS] defaults to address ' + defaultAddr,
+    '',
   ].join('\n');
 
   process.stdout.write(str);
@@ -49,7 +50,7 @@ const outpEngine = new PortAudio.AudioIO({
 });
 
 
-const server = new TCP(outpEngine);
+const server = new UDP.Server(outpEngine);
 
 process.on('exit', server.stop.bind(server));       // cleanup
 
@@ -58,7 +59,7 @@ process.on('SIGUSR1', process.exit.bind(process));  // exit
 process.on('SIGUSR2', process.exit.bind(process));  // exit
 
 
-let tcpAddress = args.address || defaultAddr;
-let tcpPort = args.port || defaultPort;
+let udpAddress = args.address;
+let udpPort = args.port;
 
 server.start(args.address, args.port);
