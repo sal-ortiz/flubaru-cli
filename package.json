@@ -4,7 +4,7 @@
   "dependencies": {
     "command-line-args": "^5.1.1",
     "naudiodon": "^2.2.4",
-    "tcp-audio-stream": "git+https://github.com/slackjockey/tcp-audio-stream.git"
+    "udp-audio-stream": "git+https://github.com/slackjockey/udp-audio-stream.git"
   },
   "author": "Salvador Ortiz",
   "license": "MIT"
